@@ -1,13 +1,17 @@
-import requests
-API_TOKEN = "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"
-API_URL = "https://api-inference.huggingface.co/models/jinhybr/OCR-Donut-CORD"
-headers = {"Authorization": f"Bearer {API_TOKEN}"}
+import PIL.Image
+# import streamlit as st
+import google.generativeai as genai
+from dotenv import load_dotenv, find_dotenv
 
-def query(filename):
-    with open(filename, "rb") as f:
-        data = f.read()
-    response = requests.post(API_URL, headers=headers, data=data)
-    return response.json()
 
-output = query("Cats.jpg")
-print(output)
+# Initialize Gemini-Pro 
+load_dotenv(find_dotenv())
+genai.configure()
+# model = genai.GenerativeModel('gemini-1.0-pro-latest')
+img = PIL.Image.open('img.jpg')
+model = genai.GenerativeModel('gemini-pro-vision')
+response = model.generate_content(img)
+
+response = model.generate_content(["Write a short, engaging blog post based on this picture. It should include a description of the meal in the photo and talk about my journey meal prepping.", img])
+response.resolve()
+print(response.text)
