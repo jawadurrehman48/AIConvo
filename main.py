@@ -21,7 +21,7 @@ def generate_content(prompt, model_name, image=None):
     return response
 
 # Streamlit UI
-st.title("Jawad's Chat Bot")
+st.title("AIConvo")
 st.sidebar.title("Settings")
 model_name = st.sidebar.selectbox("Select Model", ["gemini-pro", "gemini-pro-vision"])
 prompt = st.text_input("Enter Prompt", "What is the meaning of life?")
